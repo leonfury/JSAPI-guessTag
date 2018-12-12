@@ -89,21 +89,23 @@ let buttons = guessContainer.children; //short form
 			}).then(function(result) {
 				let items = result.response;
 				
-				for (let i = 0; i < items.length; i++) {
-					if (items[i].type == "photo") {
-						let photos = items[i].photos[0].alt_sizes[0].url;
+					for (let i = 0; i < items.length; i++) {
+						if (items[i].type == "photo") {
+							let photos = items[i].photos[0].alt_sizes[0].url;
 
-						const li = document.createElement('li');
-						const img = document.createElement('img');
+							const li = document.createElement('li');
+							const img = document.createElement('img');
 
-						li.classList.add('gridItems');
-						img.setAttribute('src', photos);
+							li.classList.add('gridItems');
+							img.setAttribute('src', photos);
 
-						li.appendChild(img);
-						photoGrid.appendChild(li);
+							li.appendChild(img);
+							photoGrid.appendChild(li);
+						}
+						
 					}
-					console.log(photoGrid.children.length)
-				}
+					console.log(photoGrid.children.length);
+				
 			}).catch(function(err) {
 				window.alert('Error Message API offline : ' + err);
 			});	
