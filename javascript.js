@@ -85,7 +85,7 @@ let masonry;
 	function fillGrid (tag) {
 		console.log('>> function fillGrid executed with tag: ' + tag);
 
-		fetch("https://api.tumblr.com/v2/tagged?type=photo&tag=" + tagChosen + "&offset=" + offset +"&api_key=qRnT4BW9URZhGhosGCFkTY7pahYxkKUFCxpSe38wEoOlF2oas3")
+		fetch("https://api.tumblr.com/v2/tagged?type=photo&tag=" + tagChosen + "&api_key=qRnT4BW9URZhGhosGCFkTY7pahYxkKUFCxpSe38wEoOlF2oas3")
 			.then( function(response) {
 				if(!response.ok) window.alert('invalid API URL');
 				return response.json();
