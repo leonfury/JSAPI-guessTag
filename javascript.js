@@ -1,8 +1,10 @@
 //JS guess the tag Challenge
 const guessContainer = document.getElementById('guessContainer');
 const btnGuess = document.querySelectorAll('.btnGuess');
-let photoGrid = document.getElementById('photoGrid');
+const gridItems = document.querySelectorAll('.gridItems');
+const photoGrid = document.getElementById('photoGrid');
 let buttons = guessContainer.children; //short form
+let masonry;
 
 //1. have array of tags
 	let tagNames = ["food", "pizza", "coding", "cats", "dogs", "marvel", "laughter", "landscape", "hiking", "monkeys", "zoo", "fishes", "surfing", "italy","turtle", "nature", "snow"];
@@ -82,30 +84,41 @@ let buttons = guessContainer.children; //short form
 // 7. API returns photo items
 	function fillGrid (tag) {
 		console.log('>> function fillGrid executed with tag: ' + tag);
-		fetch("https://api.tumblr.com/v2/tagged?type=photo&tag=" + tagChosen +"&api_key=qRnT4BW9URZhGhosGCFkTY7pahYxkKUFCxpSe38wEoOlF2oas3")
+
+		fetch("https://api.tumblr.com/v2/tagged?type=photo&tag=" + tagChosen + "&offset=" + offset +"&api_key=qRnT4BW9URZhGhosGCFkTY7pahYxkKUFCxpSe38wEoOlF2oas3")
 			.then( function(response) {
 				if(!response.ok) window.alert('invalid API URL');
 				return response.json();
 			}).then(function(result) {
 				let items = result.response;
 				
-					for (let i = 0; i < items.length; i++) {
-						if (items[i].type == "photo") {
-							let photos = items[i].photos[0].alt_sizes[0].url;
+				for (let i = 0; i < items.length; i++) {
+					if (items[i].type == "photo") {
+						let photos = items[i].photos[0].alt_sizes[0].url;
 
-							const li = document.createElement('li');
-							const img = document.createElement('img');
+						const li = document.createElement('li');
+						const img = document.createElement('img');
 
-							li.classList.add('gridItems');
-							img.setAttribute('src', photos);
+						li.classList.add('gridItems');
+						img.setAttribute('src', photos);
 
-							li.appendChild(img);
-							photoGrid.appendChild(li);
-						}
-						
+						li.appendChild(img);
+						photoGrid.appendChild(li);
+
+						imagesLoaded(photoGrid).on('progress', function () {
+							masonry.layout();
+						});
 					}
-					console.log(photoGrid.children.length);
-				
+					
+					//console.log(photoGrid.children.length)
+				}
+
+				masonry = new Masonry ( photoGrid, {
+					//options
+					itemSelector: '.gridItems',
+				});
+
+	
 			}).catch(function(err) {
 				window.alert('Error Message API offline : ' + err);
 			});	
