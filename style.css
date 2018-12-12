@@ -1,0 +1,16 @@
+#photoGrid img {
+	width: 100%;
+	border-radius: 5px;
+}
+
+.gridItems {
+	width: 200px;
+	display: inline-block;
+	vertical-align: center;
+	margin: 1px;
+}
+
+.btn {
+	min-width: 120px !important;
+	text-transform: uppercase !important;
+}
